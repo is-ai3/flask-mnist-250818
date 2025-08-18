@@ -26,14 +26,17 @@ def allowed_file(filename):
 
 
 #--- 追記：ここから　－－－－－－－－－－－－－－－－－－－－－－－－－
-# モデルをグローバル変数として定義（まだロードしない）
 model = None
+model_loaded = False
 
 # 最初のリクエスト時にモデルをロード
-@app.before_first_request
+@app.before_request
 def load_model_once():
-    global model
-    model = load_model('./model.keras')
+    global model, model_loaded
+    if not model_loaded:
+        model = load_model('./model.keras')
+        model_loaded = True
+
 
 #-------------　ここまで　-------------------
 
