@@ -21,22 +21,7 @@ app = Flask(__name__)
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-
-#model = load_model('./model.keras')#学習済みモデルをロード		#---変更
-
-
-#--- 追記：ここから　－－－－－－－－－－－－－－－－－－－－－－－－－
-# モデルをグローバル変数として定義（まだロードしない）
-model = None
-
-# 最初のリクエスト時にモデルをロード
-@app.before_first_request
-def load_model_once():
-    global model
-    model = load_model('./model.keras')
-
-#-------------　ここまで　-------------------
-
+model = load_model('./model.keras')#学習済みモデルをロード
 
 
 @app.route('/', methods=['GET', 'POST'])
